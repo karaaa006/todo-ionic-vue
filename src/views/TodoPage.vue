@@ -15,11 +15,9 @@
               v-for="todo in todoList"
               :key="todo.id"
               :id="todo.id"
-              :is-done="todo.isDone"
-              :title="todo.title"
-              @change="handleToggleTodo"
+              v-model:is-done="todo.isDone"
+              v-model:title="todo.title"
               @remove="handleRemoveTodo"
-              @changeTitle="handleChangeTodoTitle"
             />
           </ion-reorder-group>
         </ion-list>
@@ -90,18 +88,6 @@ onMounted(async () => {
 
 const handleReorder = (event: CustomEvent) => {
   todoList.value = event.detail.complete(todoList.value);
-};
-
-const handleToggleTodo = async (id: Todo["id"]) => {
-  const index = todoList.value.findIndex((todo) => todo.id === id);
-
-  todoList.value[index].isDone = !todoList.value[index].isDone;
-};
-
-const handleChangeTodoTitle = async ({ id, title }: Omit<Todo, "isDone">) => {
-  const index = todoList.value.findIndex((todo) => todo.id === id);
-
-  todoList.value[index].title = title;
 };
 
 const handleAddTodo = async (title: string) => {

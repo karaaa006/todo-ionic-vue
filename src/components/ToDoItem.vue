@@ -33,13 +33,13 @@
       <ion-checkbox
         v-else
         class="checkbox"
-        @ion-change="() => $emit('change', id)"
-        :checked="$props.isDone"
+        @ion-change="() => emit('update:isDone', !$props.isDone)"
+        :checked="props.isDone"
         label-placement="end"
         justify="start"
         color="dark"
       >
-        {{ $props.title }}
+        {{ props.title }}
       </ion-checkbox>
       <div class="buttons">
         <ion-button
@@ -74,8 +74,8 @@ import { Todo } from "@/ts/interfaces";
 interface Props extends Todo {}
 
 interface Emits {
-  (e: "change", id: Todo["id"]): void;
-  (e: "changeTitle", arg: Omit<Todo, "isDone">): void;
+  (e: "update:title", title: string): void;
+  (e: "update:isDone", isDone: boolean): void;
   (e: "remove", id: Todo["id"]): void;
 }
 
@@ -101,7 +101,7 @@ const handleSetTitle = async () => {
 
   isEditMode.value = false;
 
-  emit("changeTitle", { id: props.id, title: newTitle.value });
+  emit("update:title", newTitle.value);
 };
 </script>
 
