@@ -83,7 +83,7 @@ const isToastOpen = ref(false);
 onMounted(async () => {
   const data = await store.get("todos");
 
-  todoList.value = JSON.parse(data);
+  todoList.value = JSON.parse(data) ?? [];
 });
 
 const handleReorder = (event: CustomEvent) => {
